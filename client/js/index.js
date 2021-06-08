@@ -1,4 +1,5 @@
 import TemplateEngine from './templateEngine/TemplateEngine'
+import '../css/main.styl'
 
 class Helpers {
     static getClassSelectorByName(name) {
@@ -47,24 +48,24 @@ class ChatApp {
 
         this.chatItems.forEach((chatItem) => {
             chatItem.addEventListener('click', () => {
-                if (chatItem.classList.contains('active')) {
-
-                } else {
+                if (!chatItem.classList.contains('active')) {
                     this.chatItems.forEach((item) => item.classList.remove('active'))
                     chatItem.classList.add('active')
                 }
-
             })
         })
     }
 
     searchButtonInit() {
-        document
-            .getElementById('chat-search-button')
-            .addEventListener('click', (element) => {
-                console.log('search event dispatch by the button')
-                element.target.closest('form').dispatchEvent(new Event('submit'))
-            })
+        const searchBtn = document.getElementById('chat-search-button')
+        if (searchBtn == null) {
+            return
+        }
+
+        searchBtn.addEventListener('click', (element) => {
+            console.log('search event dispatch by the button')
+            element.target.closest('form').dispatchEvent(new Event('submit'))
+        })
     }
 
     /**
@@ -82,7 +83,7 @@ class ChatApp {
     chatPlusButtonInit() {
         this.chatMessagesWindow.querySelector(Helpers.getClassSelectorByName(this.selectors.additionalOptionsHandler))
             .addEventListener('click', (event) => {
-                let chatWindow = event.target.closest(Helpers.getClassSelectorByName(this.selectors.chatWindow))
+                const chatWindow = event.target.closest(Helpers.getClassSelectorByName(this.selectors.chatWindow))
                 chatWindow.classList.toggle(`${this.selectors.chatWindow}--with-additional-options`)
             })
     }
@@ -107,13 +108,8 @@ class CustomForm {
 
     aggregateFormData = () => {
         const formData = new FormData(this.domFormElement)
-        const result = {}
 
-        for (const [key, value] of formData.entries()) {
-            result[key] = value
-        }
-
-        return result
+        return Array.from(formData.entries()).reduce((acc, [key, val]) => ({[key]: val, ...acc}), {})
     }
 }
 

@@ -3,3 +3,5 @@
 /server/node_modules
 /yarn.lock
 /node_modules
+/client/dist
+package-lock.json

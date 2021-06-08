@@ -1,10 +1,5 @@
 import Handlebars from 'handlebars'
 import spectrumLogo from '../../img/png/spectrumLogo.png'
-
-import mainStyle from '../../css/main.styl'
-import fontsStyle from '../../css/fonts.styl'
-import varsStyle from '../../css/vars.styl'
-import chatStyle from '../../css/chat.styl'
 import {indexTemplate} from "./templates/indexTemplate";
 import {registerTemplate} from "./templates/registerTemplate";
 import {settingsTemplate} from "./templates/settingsTemplate";
@@ -16,24 +11,30 @@ import {chatActiveTemplate} from "./templates/chatActiveTemplate";
 export default class TemplateEngine {
     constructor() {
         const template = Handlebars.compile(this.template)
-        document.getElementById('root').innerHTML = template({...TemplateAssets.getCommonAssets})
+
+
+        document.getElementById('root').innerHTML = template({
+            ...TemplateAssets.commonImagesAssets,
+        })
+
+        // document.get.innerHTML = template({...TemplateAssets.getCommonAssets})
     }
 
     get template() {
-        switch (window.templateName) {
-            case "index":
+        switch (location.pathname) {
+            case "/index.html":
                 return indexTemplate
-            case "register":
+            case "/register.html":
                 return registerTemplate
-            case "settings":
+            case "/settings.html":
                 return settingsTemplate
-            case "chatInactive":
+            case "/chatInactive.html":
                 return chatInactiveTemplate
-            case "chatActive":
+            case "/chatActive.html":
                 return chatActiveTemplate
-            case "404":
+            case "/404.html":
                 return notFoundTemplate
-            case "500":
+            case "/500.html":
                 return errorTemplate
             default:
                 throw new Error('Wrong template name')
@@ -44,15 +45,5 @@ export default class TemplateEngine {
 class TemplateAssets {
     static commonImagesAssets = {
         spectrumLogo: spectrumLogo
-    }
-
-    static styleAssets = {
-        styles: [
-            mainStyle, fontsStyle, varsStyle, chatStyle
-        ]
-    }
-
-    static getCommonAssets = {
-        ...TemplateAssets.commonImagesAssets
     }
 }

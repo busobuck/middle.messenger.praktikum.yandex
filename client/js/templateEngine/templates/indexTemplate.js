@@ -1,4 +1,7 @@
-export const indexTemplate = `<main>
+import './../../../css/main.styl'
+
+export const indexTemplate = `
+<main>
     <div class="chat">
         <div class="chat__top-line">
             <div>128 +2A</div>
