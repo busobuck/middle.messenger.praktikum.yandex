@@ -3,6 +3,8 @@ import zoomIcon from '../../../img/png/zoomIcon.png'
 import plus from '../../../img/svg/plus.svg'
 import minus from '../../../img/svg/minus.svg'
 
+window.isChatWindow = true
+
 export const chatActiveTemplate = `<main>
     <div class="chat">
         <div class="chat__top-line">
